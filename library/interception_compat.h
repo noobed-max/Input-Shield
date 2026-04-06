@@ -1,0 +1,121 @@
+/*
+ * interception_compat.h  —  Drop-in compatibility shim for InputShield
+ * ======================================================================
+ * Include this header AFTER inputshield.h in legacy code that was written
+ * against the original Interception API.  It maps every old symbol to the
+ * new InputShield equivalents so you can recompile without touching the
+ * existing source.
+ *
+ *   #include <inputshield.h>
+ *   #include <interception_compat.h>   // ← add this line
+ */
+
+#pragma once
+#ifndef _INTERCEPTION_COMPAT_H_
+#define _INTERCEPTION_COMPAT_H_
+
+/* -- Types -- */
+typedef IshieldContext          InterceptionContext;
+typedef IshieldDevice           InterceptionDevice;
+typedef IshieldPrecedence       InterceptionPrecedence;
+typedef IshieldFilter           InterceptionFilter;
+typedef IshieldPredicate        InterceptionPredicate;
+typedef IshieldStroke           InterceptionStroke;
+typedef IshieldMouseStroke      InterceptionMouseStroke;
+typedef IshieldKeyStroke        InterceptionKeyStroke;
+
+/* -- Device limit macros -- */
+#define INTERCEPTION_MAX_KEYBOARD   ISHIELD_MAX_KEYBOARD
+#define INTERCEPTION_MAX_MOUSE      ISHIELD_MAX_MOUSE
+#define INTERCEPTION_MAX_DEVICE     ISHIELD_MAX_DEVICE
+#define INTERCEPTION_KEYBOARD(i)    ISHIELD_KEYBOARD(i)
+#define INTERCEPTION_MOUSE(i)       ISHIELD_MOUSE(i)
+
+/* -- Key state -- */
+#define INTERCEPTION_KEY_DOWN               ISHIELD_KEY_DOWN
+#define INTERCEPTION_KEY_UP                 ISHIELD_KEY_UP
+#define INTERCEPTION_KEY_E0                 ISHIELD_KEY_E0
+#define INTERCEPTION_KEY_E1                 ISHIELD_KEY_E1
+#define INTERCEPTION_KEY_TERMSRV_SET_LED    ISHIELD_KEY_TERMSRV_SET_LED
+#define INTERCEPTION_KEY_TERMSRV_SHADOW     ISHIELD_KEY_TERMSRV_SHADOW
+#define INTERCEPTION_KEY_TERMSRV_VKPACKET   ISHIELD_KEY_TERMSRV_VKPACKET
+
+/* -- Filter key state -- */
+#define INTERCEPTION_FILTER_KEY_NONE             ISHIELD_FILTER_KEY_NONE
+#define INTERCEPTION_FILTER_KEY_ALL              ISHIELD_FILTER_KEY_ALL
+#define INTERCEPTION_FILTER_KEY_DOWN             ISHIELD_FILTER_KEY_DOWN
+#define INTERCEPTION_FILTER_KEY_UP               ISHIELD_FILTER_KEY_UP
+#define INTERCEPTION_FILTER_KEY_E0               ISHIELD_FILTER_KEY_E0
+#define INTERCEPTION_FILTER_KEY_E1               ISHIELD_FILTER_KEY_E1
+#define INTERCEPTION_FILTER_KEY_TERMSRV_SET_LED  ISHIELD_FILTER_KEY_TERMSRV_SET_LED
+#define INTERCEPTION_FILTER_KEY_TERMSRV_SHADOW   ISHIELD_FILTER_KEY_TERMSRV_SHADOW
+#define INTERCEPTION_FILTER_KEY_TERMSRV_VKPACKET ISHIELD_FILTER_KEY_TERMSRV_VKPACKET
+
+/* -- Mouse state -- */
+#define INTERCEPTION_MOUSE_LEFT_BUTTON_DOWN   ISHIELD_MOUSE_LEFT_BUTTON_DOWN
+#define INTERCEPTION_MOUSE_LEFT_BUTTON_UP     ISHIELD_MOUSE_LEFT_BUTTON_UP
+#define INTERCEPTION_MOUSE_RIGHT_BUTTON_DOWN  ISHIELD_MOUSE_RIGHT_BUTTON_DOWN
+#define INTERCEPTION_MOUSE_RIGHT_BUTTON_UP    ISHIELD_MOUSE_RIGHT_BUTTON_UP
+#define INTERCEPTION_MOUSE_MIDDLE_BUTTON_DOWN ISHIELD_MOUSE_MIDDLE_BUTTON_DOWN
+#define INTERCEPTION_MOUSE_MIDDLE_BUTTON_UP   ISHIELD_MOUSE_MIDDLE_BUTTON_UP
+#define INTERCEPTION_MOUSE_BUTTON_1_DOWN      ISHIELD_MOUSE_BUTTON_1_DOWN
+#define INTERCEPTION_MOUSE_BUTTON_1_UP        ISHIELD_MOUSE_BUTTON_1_UP
+#define INTERCEPTION_MOUSE_BUTTON_2_DOWN      ISHIELD_MOUSE_BUTTON_2_DOWN
+#define INTERCEPTION_MOUSE_BUTTON_2_UP        ISHIELD_MOUSE_BUTTON_2_UP
+#define INTERCEPTION_MOUSE_BUTTON_3_DOWN      ISHIELD_MOUSE_BUTTON_3_DOWN
+#define INTERCEPTION_MOUSE_BUTTON_3_UP        ISHIELD_MOUSE_BUTTON_3_UP
+#define INTERCEPTION_MOUSE_BUTTON_4_DOWN      ISHIELD_MOUSE_BUTTON_4_DOWN
+#define INTERCEPTION_MOUSE_BUTTON_4_UP        ISHIELD_MOUSE_BUTTON_4_UP
+#define INTERCEPTION_MOUSE_BUTTON_5_DOWN      ISHIELD_MOUSE_BUTTON_5_DOWN
+#define INTERCEPTION_MOUSE_BUTTON_5_UP        ISHIELD_MOUSE_BUTTON_5_UP
+#define INTERCEPTION_MOUSE_WHEEL              ISHIELD_MOUSE_WHEEL
+#define INTERCEPTION_MOUSE_HWHEEL            ISHIELD_MOUSE_HWHEEL
+
+/* -- Filter mouse state -- */
+#define INTERCEPTION_FILTER_MOUSE_NONE               ISHIELD_FILTER_MOUSE_NONE
+#define INTERCEPTION_FILTER_MOUSE_ALL                ISHIELD_FILTER_MOUSE_ALL
+#define INTERCEPTION_FILTER_MOUSE_LEFT_BUTTON_DOWN   ISHIELD_FILTER_MOUSE_LEFT_BUTTON_DOWN
+#define INTERCEPTION_FILTER_MOUSE_LEFT_BUTTON_UP     ISHIELD_FILTER_MOUSE_LEFT_BUTTON_UP
+#define INTERCEPTION_FILTER_MOUSE_RIGHT_BUTTON_DOWN  ISHIELD_FILTER_MOUSE_RIGHT_MOUSE_DOWN
+#define INTERCEPTION_FILTER_MOUSE_RIGHT_BUTTON_UP    ISHIELD_FILTER_MOUSE_RIGHT_BUTTON_UP
+#define INTERCEPTION_FILTER_MOUSE_MIDDLE_BUTTON_DOWN ISHIELD_FILTER_MOUSE_MIDDLE_BUTTON_DOWN
+#define INTERCEPTION_FILTER_MOUSE_MIDDLE_BUTTON_UP   ISHIELD_FILTER_MOUSE_MIDDLE_BUTTON_UP
+#define INTERCEPTION_FILTER_MOUSE_BUTTON_1_DOWN      ISHIELD_FILTER_MOUSE_BUTTON_1_DOWN
+#define INTERCEPTION_FILTER_MOUSE_BUTTON_1_UP        ISHIELD_FILTER_MOUSE_BUTTON_1_UP
+#define INTERCEPTION_FILTER_MOUSE_BUTTON_2_DOWN      ISHIELD_FILTER_MOUSE_BUTTON_2_DOWN
+#define INTERCEPTION_FILTER_MOUSE_BUTTON_2_UP        ISHIELD_FILTER_MOUSE_BUTTON_2_UP
+#define INTERCEPTION_FILTER_MOUSE_BUTTON_3_DOWN      ISHIELD_FILTER_MOUSE_BUTTON_3_DOWN
+#define INTERCEPTION_FILTER_MOUSE_BUTTON_3_UP        ISHIELD_FILTER_MOUSE_BUTTON_3_UP
+#define INTERCEPTION_FILTER_MOUSE_BUTTON_4_DOWN      ISHIELD_FILTER_MOUSE_BUTTON_4_DOWN
+#define INTERCEPTION_FILTER_MOUSE_BUTTON_4_UP        ISHIELD_FILTER_MOUSE_BUTTON_4_UP
+#define INTERCEPTION_FILTER_MOUSE_BUTTON_5_DOWN      ISHIELD_FILTER_MOUSE_BUTTON_5_DOWN
+#define INTERCEPTION_FILTER_MOUSE_BUTTON_5_UP        ISHIELD_FILTER_MOUSE_BUTTON_5_UP
+#define INTERCEPTION_FILTER_MOUSE_WHEEL              ISHIELD_FILTER_MOUSE_WHEEL
+#define INTERCEPTION_FILTER_MOUSE_HWHEEL             ISHIELD_FILTER_MOUSE_HWHEEL
+#define INTERCEPTION_FILTER_MOUSE_MOVE               ISHIELD_FILTER_MOUSE_MOVE
+
+/* -- Mouse movement flags -- */
+#define INTERCEPTION_MOUSE_MOVE_RELATIVE      ISHIELD_MOUSE_MOVE_RELATIVE
+#define INTERCEPTION_MOUSE_MOVE_ABSOLUTE      ISHIELD_MOUSE_MOVE_ABSOLUTE
+#define INTERCEPTION_MOUSE_VIRTUAL_DESKTOP    ISHIELD_MOUSE_VIRTUAL_DESKTOP
+#define INTERCEPTION_MOUSE_ATTRIBUTES_CHANGED ISHIELD_MOUSE_ATTRIBUTES_CHANGED
+#define INTERCEPTION_MOUSE_MOVE_NOCOALESCE    ISHIELD_MOUSE_MOVE_NOCOALESCE
+#define INTERCEPTION_MOUSE_TERMSRV_SRC_SHADOW ISHIELD_MOUSE_TERMSRV_SRC_SHADOW
+
+/* -- Functions -- */
+#define interception_create_context    ishield_create_context
+#define interception_destroy_context   ishield_destroy_context
+#define interception_get_precedence    ishield_get_precedence
+#define interception_set_precedence    ishield_set_precedence
+#define interception_get_filter        ishield_get_filter
+#define interception_set_filter        ishield_set_filter
+#define interception_wait              ishield_wait
+#define interception_wait_with_timeout ishield_wait_with_timeout
+#define interception_send              ishield_send
+#define interception_receive           ishield_receive
+#define interception_get_hardware_id   ishield_get_hardware_id
+#define interception_is_invalid        ishield_is_invalid
+#define interception_is_keyboard       ishield_is_keyboard
+#define interception_is_mouse          ishield_is_mouse
+
+#endif /* _INTERCEPTION_COMPAT_H_ */
